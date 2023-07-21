@@ -59,7 +59,6 @@ cursor.execute("""
     )""")
 
 cursor.execute("CREATE UNIQUE INDEX idx_humans_wid ON humans (wiki_id)")
-cursor.execute("CREATE INDEX idx_humans_viafid ON humans (viaf_id)")
 cursor.execute("CREATE INDEX idx_names_human ON names (human_id)")
 cursor.execute("CREATE INDEX idx_names_name ON names (name)")
 cursor.execute("CREATE UNIQUE INDEX idx_wditems_wid ON wditems (wiki_id)")
