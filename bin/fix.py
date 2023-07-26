@@ -39,26 +39,9 @@ def update_human(human_id, name, surname):
     connection.commit()
 
 
-def add_wdname(tot, qval):
+def get_wdname(qval):
     if not qval:
-        return tot
-
-    cursor_wditem.execute("SELECT * FROM wditems WHERE wiki_id = ?", (qval,))
-    res = cursor_wditem.fetchone()
-
-    if res and res['labels']:
-        if tot == "":
-            tot = res['labels']
-        else:
-            tot = tot + " " + res['labels']
-
-    return tot.lower()
-
-cursor_human.execute("SELECT * from humans")
-
-def add_wdname(tot, qval):
-    if not qval:
-        return tot
+        return None
 
     cursor_wditem.execute("SELECT * FROM wditems WHERE wiki_id = ?", (qval,))
     row = cursor_wditem.fetchone()
@@ -66,32 +49,40 @@ def add_wdname(tot, qval):
     if row:
         labels = json.loads(row['labels'])
         print(f"{qval} -> {labels}")
-        if tot == "":
-            tot = labels[0]
-        else:
-            tot = f"{tot} {labels[0]}"
+        return labels[0]
 
-    return tot.lower()
+    return None
+
+
+cursor_human.execute("SELECT * from humans")
 
 for row in cursor_human:
-    print(f"{row['id']} --- qnames: {row['qnames']} --- qsurnames: {row['qsurnames']} --- {row['wiki_id']}")
+    print(f"{row['id']} --- qnames: {row['qnames']} --- qsurnames: {row['qsurnames']} ---  {row['wiki_id']}")
 
     qnames = json.loads(row['qnames']) if row['qnames'] != 'null' else []
     qsurnames = json.loads(row['qsurnames']) if row['qsurnames'] != 'null' else []
 
-    tot = ""
-    for qname in qnames:
-        tot = add_wdname(tot, qname)
-    for qsurname in qsurnames:
-        tot = add_wdname(tot, qsurname)
+    names = []
+    for qval in qnames + qsurnames:
+        r = get_wdname(qval)
+        if r:
+            names.append(r)
+
+    if len(names) < 2:
+        print("not enough")
+        continue
+        
+    name = " ".join(names).lower()
 
     cursor_name.execute("SELECT count(*) as c FROM names "
                         "WHERE name = ? AND human_id = ? LIMIT 1",
-                        (tot, row['id']))
+                        (name, row['id']))
     res = cursor_name.fetchone()
 
     if res['c'] == 0:
-        print(tot)
+        print(name)
+    else:
+        print(dict(res))
     input(".")
 
 connection.commit()
