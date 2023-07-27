@@ -113,6 +113,13 @@ do
 done
 ```
 
+Then we must add the names/surnames from given name and family name
+that are not in the `names` table.
+
+```
+./bin/complete_names.py
+```
+
 Now you can also remove the `wikidata/data` dir that contains the dump.
 
 ## Use the library
