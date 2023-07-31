@@ -38,7 +38,7 @@ for name in open("data/names.txt", mode='r'):
     print(f"{res['c']} -> {name}")
 
     cursor_delete.execute("""
-        DELETE FROM mames where name = ?
+        DELETE FROM names where name = ?
         """, (name, ))
 
-cursor_delete.commit()
+connection.commit()
