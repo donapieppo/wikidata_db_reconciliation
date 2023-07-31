@@ -18,5 +18,6 @@ OCCUPATIONS = {
     'composer': 'Q36834',
     'illustrator': 'Q644687',
     'author': 'Q482980',
-    'sculptor': 'Q1281618'
+    'sculptor': 'Q1281618',
+    'designer' : 'Q5322166'
 }
