@@ -5,10 +5,12 @@ import sqlite3
 
 connection = sqlite3.connect("/home/backup/wikidata.db")
 connection.row_factory = sqlite3.Row
-cursor = connection.cursor()
-cursor2 = connection.cursor()
+cursor_human = connection.cursor()
+cursor_viaf = connection.cursor()
 
 cursor.execute("SELECT * from humans")
+
+exit(0)
 
 for row in cursor:
     if row['viaf_id'] and row['viaf_id'] != 'null':
