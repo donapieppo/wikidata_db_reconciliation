@@ -28,7 +28,7 @@ class WikidataOccupation():
 
     # True / False
     def check(self, row, occupations):
-        if occupations == False:
+        if not occupations:
             return True
         if 'occupations' not in row:
             return False
