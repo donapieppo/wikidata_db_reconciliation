@@ -9,12 +9,18 @@ QNAMES = {
     'P735',       # given name
     'Q12308941',  # male given name (Q12308941)
     'Q11879590',  # female given name (Q11879590)
+    'Q1471689',   # ancient Egyptian name (Q1471689)
+    'Q3409032',   # unisex given name (Q3409032) 
+    'Q18972207'   # female family name (Q18972207)
 }
 
 QSURNAMES = {
-    'P734',     # family name
-    'Q101352',  # family name
-    'Q202444'   # given name
+    'P734',       # family name
+    'Q101352',    # family name
+    'Q202444',    # given name
+    'Q18972207',  # female family name (Q18972207) 
+    'Q106319018', # hyphenated surname (Q106319018) 
+    'Q66480858',  # affixed family name (Q66480858)
 }
 
 QNAMES_AND_SURNAMES = QNAMES.union(QSURNAMES)
