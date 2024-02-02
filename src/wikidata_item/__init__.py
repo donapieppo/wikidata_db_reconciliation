@@ -1,4 +1,5 @@
 import json
+from wikidata_json_helpers import extract_datavalue, extract_value, check_value
 
 OCCUPATIONS = {
     'Q28640',    # profession (Q28640)
@@ -37,7 +38,11 @@ class WikidataItem:
     def extract_labels(self):
         # return labels if interesting item (name, surname, occupation)
         for x in self.json['claims']['P31']:
-            if x['mainsnak']['datavalue']['value']['id'] in QNAMES_AND_SURNAMES:
+            qid = extract_value(x, "mainsnak.datavalue.value.id")
+            if not qid:
+                print("NO QUID")
+                print(x)
+            elif qid in QNAMES_AND_SURNAMES:
                 labels = self.json['labels']
                 res = set()
                 for lang in self.languages:
@@ -47,7 +52,7 @@ class WikidataItem:
                         else:
                             res.add(labels[lang]['value'])
                 return res
-            elif x['mainsnak']['datavalue']['value']['id'] in OCCUPATIONS:
+            elif qid in OCCUPATIONS:
                 labels = self.json['labels']
                 res = set()
                 for lang in ['it', 'en']:
