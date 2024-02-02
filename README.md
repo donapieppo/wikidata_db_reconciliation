@@ -1,6 +1,6 @@
 # Wikidata Local Reconciliation
 
-From a wikidata database dump we build a sqlite3 db useful for reconciliation of authors.
+From a wikidata database dump we build a sqlite3 db useful for local reconciliation of authors.
 
 From the wikidata dump we take all names and aliases of humans(Q5) with all occupations, birth and death dates and some "references number" 
 in order to query for wikidata id given a name.
