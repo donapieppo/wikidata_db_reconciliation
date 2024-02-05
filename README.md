@@ -122,6 +122,9 @@ that are not in the `names` table.
 
 Now you can also remove the `wikidata/data` dir that contains the dump.
 
+The size of the `wikidata.db` file is about 2.5G and contains something like
+10 millions of person and 14 millions of names.
+
 ## Use the library
 
 The following snippet asks to reconciliate the string `martin scorsese` with
