@@ -99,11 +99,19 @@ class WikidataHuman:
             return (None if res == [None] else res)
 
     def count_references(self):
+        """FIXME
+        Counts possible "weight" for the record by counting 
+        - award received (P166) 
+        - notable work (P800) 
+        - nominated for (P1411) 
+        """
         n = 0
-        # for interest in ["P31", "P569"]:
-        #     if interest in self.json['claims']:
         if "P800" in self.json['claims']:
-            n = len(self.json['claims']["P800"])
+            n = n + len(self.json['claims']["P800"])
+        if "P166" in self.json['claims']:
+            n = n + len(self.json['claims']["P166"])
+        if "P1411" in self.json['claims']:
+            n = n + len(self.json['claims']["P1411"])
         return n
 
     def save(self, cursor):
