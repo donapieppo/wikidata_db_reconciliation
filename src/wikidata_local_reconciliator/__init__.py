@@ -1,5 +1,4 @@
 import sqlite3
-import json 
 import re
 from unidecode import unidecode
 
@@ -19,13 +18,18 @@ class WikidataLocalReconciliator():
         self.wd_occupation.add_occupation(name, wiki_id)
 
     def check_year(self, row, year):
+        """Returns True id checks if row['year_of_birth'] > year
+
+        It usually cheks if the person was already born in the year of the opera
+        """
+
         if year and row['year_of_birth']:
             return row['year_of_birth'] < year
         else:
             return(True)
 
     def clear_name(self, name, replace_dash=False, with_unidecode=False):
-        """ Clear the name and return it """
+        """Clear the name and return it"""
         # fist lower the name since in db they are lowercase
         name = name.lower()
         # take off brackets (200xii)
@@ -39,7 +43,7 @@ class WikidataLocalReconciliator():
         return(name)
 
     def check_name_from_wiki_id(self, wiki_id, name):
-        """ check if human identified by wiki_id has the name """
+        """Check if human identified by wiki_id has the name"""
         res = self.cursor.execute("""
             SELECT id FROM names WHERE wiki_id = ? AND name = ?
             """, (wiki_id, name.lower())).fetchone()
@@ -66,6 +70,7 @@ class WikidataLocalReconciliator():
         all_rows = self.cursor.execute("""
             SELECT DISTINCT humans.* FROM humans
             LEFT JOIN names ON humans.id = human_id
+            LEFT JOIN viafs ON humans.id = human_id
             WHERE names.name = ?
             """, (name, )).fetchall()
         # COLLATE NOCASE
