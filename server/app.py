@@ -9,25 +9,30 @@ def api_search():
     # Get query parameters from the URL
     name = request.args.get('name')
     year = request.args.get('year')
-    year = int(year) if len(year) > 0 else 0
+    year = int(year) if len(year) > 0 else 2024
 
     reconciliator = WikidataLocalReconciliator(db_file='../../../tmp/wikidata.db')
     result = reconciliator.ask(name, year, 'film_director')
 
-    return jsonify(json.dumps(result, default=tuple))
-    return jsonify({'wiki_id': result['wiki_id'], 
-                    'label': result['label'],
-                    'year_of_birth': result['year_of_birth']})
+    response = app.response_class(
+      response=json.dumps(result, default=tuple), 
+      status=200, 
+      mimetype='application/json')
+    return response
 
 @app.route('/search', methods=['POST'])
 def search(): 
     name = request.form['name']
-    year = int(request.form['year']) if len(request.form['year']) > 0 else 0
+    year = request.form['year']
+    year = int(year) if len(year) > 0 else 2024
 
     reconciliator = WikidataLocalReconciliator(db_file='../../../tmp/wikidata.db')
     result = reconciliator.ask(name, year, 'film_director')
 
-    return render_template('search.html', name=name, result=result)
+    if result:
+        return render_template('search.html', name=name, result=result)
+    else:
+        return "No result"
 
 
 @app.route('/', methods=['GET'])
