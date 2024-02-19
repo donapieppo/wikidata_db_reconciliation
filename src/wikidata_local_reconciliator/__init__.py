@@ -60,6 +60,7 @@ class WikidataLocalReconciliator():
             SELECT humans.* FROM humans
             LEFT JOIN viafs ON viafs.human_id = humans.id
             WHERE viafs.viaf_id = ?
+            ORDER BY nreferences DESC
             """, (viaf_id, )).fetchone()
         return res if res else None
 
