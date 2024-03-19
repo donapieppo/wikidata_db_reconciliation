@@ -1,0 +1,15 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Risultati per {{ name }}</h1>
+
+<div class="alert alert-info">
+  {% for k in result %}
+  <p>
+  <strong>{{ k }}: </strong>
+  {{ result[k] }}
+  </p>
+  {% endfor %}
+</div>
+
+<a href="/" class="btn btn-primary">indietro</a>
+{% endblock %}

@@ -1,0 +1,26 @@
+{% extends "layout.html" %}
+{% block content %}
+<h1>Reconciliator API</h1>
+
+<form action="search" method="post">
+  <div>
+    <label class="form-label">Nome</label>
+    <input class="form-control" type="text" name="name"></input>
+  </div>
+  <div>
+    <label class="form-label">Anno</label>
+    <input class="form-control" type="text" name="year"></input>
+  </div>
+  <div>
+    <label class="form-label">Professione</label>
+    {% for i in occupations %}
+    <label class="d-block">
+    <input type="checkbox" name="occupations" value="{{ i }}"/>
+    {{ i }}
+    </label>
+    {% endfor %}
+  </div>
+
+  <input class="btn btn-primary my-3" type="submit"/>
+</form>
+{% endblock %}
