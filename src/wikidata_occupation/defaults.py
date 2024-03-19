@@ -5,6 +5,7 @@ OCCUPATIONS = {
     'film_director': 'Q2526255',
     'painter': 'Q1028181',
     'writer': 'Q36180',
+    'composer': 'Q36834',
     'novelist': 'Q6625963',
     'video_artist': 'Q18216771',
     'photographer': 'Q33231',
